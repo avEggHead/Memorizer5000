@@ -176,6 +176,12 @@ namespace StringToolkitTests
         }
 
         [TestMethod]
+        public void RandomlyHideWord()
+        {
+            // Arrange
+        }
+
+        [TestMethod]
         public void GetArrayOfComplexWordModel()
         {
             // Arrange
