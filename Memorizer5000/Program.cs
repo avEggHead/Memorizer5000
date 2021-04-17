@@ -21,9 +21,21 @@ namespace Memorizer5000
             Console.WriteLine(stringToolkit.CountSpaces(sentence));
             Console.ReadKey();
 
+            string[] words = stringToolkit.GetWords(sentence);
+
+            foreach(string word in words)
+            {
+                Console.WriteLine(word);
+            }
+
+            Console.ReadKey();
+
+            Console.WriteLine(stringToolkit.HideWord(sentence, 4));
+
+            Console.ReadKey();
             // divide the number of spaces by 2
 
-            
+
         }
     }
 }
