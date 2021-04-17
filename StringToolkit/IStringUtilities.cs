@@ -1,4 +1,5 @@
 ﻿using StringToolkit.Models;
+using System;
 
 namespace StringToolkit
 {
@@ -10,6 +11,7 @@ namespace StringToolkit
         public int CountWords(string sentence);
         public string[] GetWords(string sentence);
         public string HideWord(string sentence, int wordNumberInSentence);
-        public WordModel[] GetWordsModel(string sentence);
+        public WordModel[] GetWordModels(string sentence);
+        public Tuple<WordModel, string> RandomlyHideWord(string sentence);
     }
 }

@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StringToolkit;
 using StringToolkit.Models;
-
+using System;
 
 namespace StringToolkitTests
 {
@@ -179,6 +179,15 @@ namespace StringToolkitTests
         public void RandomlyHideWord()
         {
             // Arrange
+            IStringUtilities stringUtilities = new StringUtilities();
+            string sentence = "There is a space at the start";
+
+            // Act
+            Tuple<WordModel, string> result = stringUtilities.RandomlyHideWord(sentence);
+
+            // Assert
+            Assert.AreEqual(sentence.Length, result.Item2.Length);
+            Assert.IsTrue(sentence.Contains(result.Item1.Word));
         }
 
         [TestMethod]
@@ -189,7 +198,7 @@ namespace StringToolkitTests
             string sentence = "There is a space at the start";
 
             // Act
-            WordModel[] sentenceModel = stringUtilities.GetWordsModel(sentence);
+            WordModel[] sentenceModel = stringUtilities.GetWordModels(sentence);
 
             // Assert
             Assert.IsTrue(sentenceModel.Length == 7);
@@ -203,7 +212,7 @@ namespace StringToolkitTests
             string sentence = "There is a space at the start";
 
             // Act
-            WordModel[] sentenceModel = stringUtilities.GetWordsModel(sentence);
+            WordModel[] sentenceModel = stringUtilities.GetWordModels(sentence);
 
             // Assert
             Assert.IsTrue(sentenceModel[0].WordLength == 5);
@@ -215,6 +224,9 @@ namespace StringToolkitTests
             Assert.IsTrue(sentenceModel[6].StartOfWordIndexInSentence == 24);
             Assert.IsTrue(sentenceModel[6].Word == "start");
             Assert.IsTrue(sentenceModel[5].Word == "the");
+            Assert.IsTrue(sentenceModel[0].PositionInSentence == 1);
+            Assert.IsTrue(sentenceModel[1].PositionInSentence == 2);
+            Assert.IsTrue(sentenceModel[2].PositionInSentence == 3);
 
         }
     }

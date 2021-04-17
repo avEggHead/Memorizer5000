@@ -21,6 +21,7 @@ namespace StringToolkit
 
         public int CountWords(string sentence)
         {
+            if (sentence.Length == 0) { throw new StringUtilitiesException(MessageConstants.LengthError); }
             int numberOfWords = 0;
             int numberOfSpaces = this.CountSpaces(sentence);
             if(!IsSpaceAtEnd(sentence) && !(IsSpaceAtStart(sentence)))
@@ -42,7 +43,7 @@ namespace StringToolkit
             return words;
         }
 
-        public WordModel[] GetWordsModel(string sentence)
+        public WordModel[] GetWordModels(string sentence)
         {
             string[] words = this.GetWords(sentence);
             WordModel[] wordModels = new WordModel[words.Length];
@@ -56,14 +57,16 @@ namespace StringToolkit
                 word.StartOfWordIndexInSentence = startOfWord;
                 startOfWord = startOfWord + word.WordLength + 1;
                 wordModels[i] = word;
+                word.PositionInSentence = i+1;
             }
             return wordModels;
         }
 
         public string HideWord(string sentence, int wordNumberInSentence)
         {
+            if (sentence.Length == 0) { throw new StringUtilitiesException(MessageConstants.LengthError); }
             string result = string.Empty;
-            WordModel[] words = this.GetWordsModel(sentence);
+            WordModel[] words = this.GetWordModels(sentence);
             WordModel wordToHide = words[wordNumberInSentence -1];
             result = sentence.Remove(wordToHide.StartOfWordIndexInSentence, wordToHide.WordLength);
             for(int i = 0; i < wordToHide.WordLength; i++)
@@ -95,6 +98,32 @@ namespace StringToolkit
                 isSpaceAtStart = true;
             }
             return isSpaceAtStart;
+        }
+
+        public Tuple<WordModel, string> RandomlyHideWord(string sentence)
+        {
+            if (sentence.Length == 0) { throw new StringUtilitiesException(MessageConstants.LengthError); }
+           
+            WordModel[] words = this.GetWordModels(sentence);
+            int randomIndex = 0;
+            int maxIndex = words.Length - 1;
+            WordModel hiddenWord = null;
+            bool lookForWordToHide = true;
+            while (lookForWordToHide)
+            {
+                Random randomizer = new Random();
+                randomIndex = randomizer.Next(0, maxIndex);
+                hiddenWord = words[randomIndex];
+                if (!hiddenWord.Word.Contains('_'))
+                {
+                    lookForWordToHide = false;
+                }
+                hiddenWord.IsHidden = true;
+            }
+            
+            string blankedOutSentence = this.HideWord(sentence, randomIndex + 1);
+
+            return new Tuple<WordModel, string>(hiddenWord, blankedOutSentence);
         }
     }
 }

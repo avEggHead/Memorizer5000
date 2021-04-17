@@ -13,5 +13,9 @@ namespace StringToolkit.Models
         public int WordLength { get; set; }
 
         public int StartOfWordIndexInSentence { get; set; }
+
+        public int PositionInSentence { get; set; }
+
+        public bool IsHidden { get; set; }
     }
 }

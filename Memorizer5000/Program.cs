@@ -1,4 +1,5 @@
 ﻿using StringToolkit;
+using StringToolkit.Models;
 using System;
 
 namespace Memorizer5000
@@ -7,30 +8,26 @@ namespace Memorizer5000
     {
         static void Main(string[] args)
         {
-            // take a sentence and remove the middle word
 
-            string sentence = "This is the first sentence to test";
-
+            Console.WriteLine("Type or Paste in a sentence you want to memorize. (do not exceed 254 characters)");
+            string sentence = Console.ReadLine();
+            Console.Clear();
             // find the middle word
 
             // find the number of spaces
             // loop through the char array of string stuff
-
             IStringUtilities stringToolkit = new StringUtilities();
 
-            Console.WriteLine(stringToolkit.CountSpaces(sentence));
-            Console.ReadKey();
+            WordModel[] words = stringToolkit.GetWordModels(sentence);
 
-            string[] words = stringToolkit.GetWords(sentence);
-
-            foreach(string word in words)
+            for(int i =0; i < words.Length; i++)
             {
-                Console.WriteLine(word);
+                sentence = stringToolkit.RandomlyHideWord(sentence).Item2;
+                Console.WriteLine(sentence);
+                Console.WriteLine("Press a key");
+                Console.ReadKey();
+                Console.Clear();
             }
-
-            Console.ReadKey();
-
-            Console.WriteLine(stringToolkit.HideWord(sentence, 4));
 
             Console.ReadKey();
             // divide the number of spaces by 2
